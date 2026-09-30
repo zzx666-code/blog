@@ -136,7 +136,7 @@ export function BlogDetailClient({
   return (
     <>
       <main className={cn(PUBLIC_CONTAINER, "grid min-w-0 gap-8 py-8 px-4")}>
-        <article className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <article className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,860px)_280px] lg:justify-center">
           <div className="grid min-w-0 gap-6">
             <PublicCard color="app-yellow" className="grid gap-5 p-5 sm:p-7">
               <header className="grid min-w-0 gap-5">

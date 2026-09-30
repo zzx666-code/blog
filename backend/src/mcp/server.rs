@@ -74,8 +74,8 @@ pub fn router(state: AppState) -> Router<AppState> {
 
     Router::new()
         .nest_service("/mcp", service)
-        .layer(middleware::from_fn(mcp_accept_compat_middleware))
-        .layer(middleware::from_fn_with_state(state, mcp_auth_middleware))
+        .route_layer(middleware::from_fn(mcp_accept_compat_middleware))
+        .route_layer(middleware::from_fn_with_state(state, mcp_auth_middleware))
 }
 
 async fn mcp_accept_compat_middleware(mut request: Request<Body>, next: Next) -> Response {

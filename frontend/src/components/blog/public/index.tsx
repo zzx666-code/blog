@@ -71,16 +71,16 @@ export function getCardColor(seed: number | string): CardColor {
 }
 
 
-export const PUBLIC_CONTAINER = "mx-auto w-[min(1120px,calc(100vw-2rem))]";
+export const PUBLIC_CONTAINER = "mx-auto w-[min(1440px,calc(100vw-2rem))]";
 
 const NAV_LINKS = [
-  { href: "/", label: "首页", icon: "icon-miles" as const },
-  { href: "/archive", label: "归档", icon: "icon-critterpedia" as const },
-  { href: "/categories", label: "分类", icon: "icon-design" as const },
-  { href: "/tags", label: "标签", icon: "icon-diy" as const },
-  { href: "/docs", label: "文档", icon: "icon-critterpedia" as const },
-  { href: "/projects", label: "项目", icon: "icon-shopping" as const },
-  { href: "/friends", label: "友链", icon: "icon-chat" as const },
+  { href: "/", label: "首页", icon: "Home" as const },
+  { href: "/archive", label: "归档", icon: "Clock" as const },
+  { href: "/categories", label: "分类", icon: "Folder" as const },
+  { href: "/tags", label: "标签", icon: "Tag" as const },
+  { href: "/docs", label: "文档", icon: "Book" as const },
+  { href: "/projects", label: "项目", icon: "Rocket" as const },
+  { href: "/friends", label: "友链", icon: "Chat" as const },
 ];
 
 export const PublicCard = memo(function PublicCard({
@@ -181,26 +181,27 @@ export function PublicHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--animal-border-color-light)] bg-[var(--animal-bg-color)]/90 backdrop-blur-xl">
       <div
-        className={cn(PUBLIC_CONTAINER, "flex min-h-16 items-center justify-between gap-4 py-3")}
+        className={cn(
+          PUBLIC_CONTAINER,
+          "flex min-h-16 items-center justify-between gap-4 px-4 py-3",
+        )}
       >
         <Link href="/" prefetch={false} className="flex min-w-0 items-center gap-3">
           {config.owner_avatar ? (
             <Image
               src={config.owner_avatar}
               alt={config.owner_name || config.site_title || "站站点头像"}
-              width={36}
-              height={36}
+              width={40}
+              height={40}
               loading="eager"
-              className="h-9 w-9 rounded-full object-cover"
+              className="h-10 w-10 rounded-full object-cover"
             />
-          ) : (
-            <AIIcon name="icon-miles" size={36} bounce />
-          )}
+          ) : null}
           <span className="min-w-0">
-            <span className="block truncate text-sm font-extrabold text-[var(--animal-text-color)]">
-              {config.site_title || "典典博客"}
+            <span className="block truncate text-lg font-extrabold text-[var(--animal-text-color)] sm:text-xl">
+              {config.site_title || "张钊学的博客"}
             </span>
-            <span className="hidden truncate text-xs font-bold text-[var(--animal-text-color-secondary)] sm:block">
+            <span className="hidden truncate text-sm font-bold text-[var(--animal-text-color-secondary)] sm:block">
               {config.site_subtitle || "Notes, projects and documents"}
             </span>
           </span>
@@ -238,7 +239,7 @@ export function PublicHeader() {
       </div>
 
       <nav
-        className={cn(PUBLIC_CONTAINER, "flex gap-1 overflow-x-auto pb-3 lg:hidden")}
+        className={cn(PUBLIC_CONTAINER, "flex gap-1 overflow-x-auto px-4 pb-3 lg:hidden")}
         aria-label="移动端主导航"
       >
         {NAV_LINKS.map((item) => (
@@ -332,7 +333,7 @@ export function PublicFooter() {
                 config.footer_text ||
                   config.site_description ||
                   config.site_subtitle ||
-                  "持续整理文章、项目与文档。",
+                  "求职中 · 用项目与文档说明能力，欢迎联系交流。",
               ),
             }}
           />
@@ -672,7 +673,7 @@ export function BlogSidebar({
           <div className="min-w-0">
             <div className="truncate text-base font-extrabold">{config.owner_name || "岛主"}</div>
             <p className="mt-1 line-clamp-2 text-xs font-bold leading-5 opacity-80">
-              {config.owner_bio || "记录技术、项目和长期积累的内容。"}
+              {config.owner_bio || "求职中"}
             </p>
           </div>
         </div>
@@ -817,12 +818,12 @@ export function PublicHome({ initialData }: { initialData?: PublicHomeInitialDat
     <main className={cn(PUBLIC_CONTAINER, "grid gap-8 py-8 px-4")}>
       <header className="grid gap-2 px-1">
         <h1 className="text-2xl font-black tracking-tight text-[var(--animal-text-color)] sm:text-3xl">
-          AI 工具链、Rust、UE5 与 SwiftUI 实战记录
+          正在求职：AI Agent、智能体开发 与后端开发
         </h1>
         <p className="max-w-3xl text-sm font-medium leading-6 text-[var(--animal-text-color-secondary)]">
           {config.blog_global_summary ||
             config.site_description ||
-            "记录真正跑通过的方案、踩坑过程与可复用的工程经验。"}
+            "用真实项目证明能力，正在寻找合适的团队与机会。"}
         </p>
       </header>
       <section className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">

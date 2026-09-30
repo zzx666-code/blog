@@ -30,8 +30,8 @@ export async function generateMetadata({
   const canonicalPath = createPaginationHref("/", "", page, pageSize, HOME_PAGE_SIZE);
 
   return {
-    title: page === 1 ? "AI 工具链、Rust、UE5 与 SwiftUI 实战记录" : `第 ${page} 页文章`,
-    description: "记录 AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战经验。",
+    title: page === 1 ? "求职中 · AI 工具链、Rust 与跨端开发实战记录" : `第 ${page} 页文章`,
+    description: "正在寻找工作机会：AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的项目实战与能力展示。",
     alternates: { canonical: absoluteUrl(canonicalPath) },
   };
 }

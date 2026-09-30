@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: http: blob:",
               "font-src 'self'",
-              "connect-src 'self' https://api.itbug.shop https://*.itbug.shop https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://www.google.com https://*.google-analytics.com http://localhost:8080 http://127.0.0.1:*",
+              "connect-src 'self' https://api.itbug.shop https://*.itbug.shop https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://www.google.com https://*.google-analytics.com http://localhost:* http://127.0.0.1:*",
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",

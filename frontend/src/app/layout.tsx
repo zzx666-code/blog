@@ -16,7 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
     const config = await siteConfigApi.getPublic();
     const siteTitle = config.site_title || SITE_NAME;
     const description = cleanText(
-      config.blog_global_summary || config.site_description || config.site_subtitle || "技术实践与长期积累。",
+      config.blog_global_summary ||
+        config.site_description ||
+        config.site_subtitle ||
+        "正在求职的开发者，记录 AI 工具链、Rust 与跨端开发的真实实践。",
     );
 
     return {
@@ -59,20 +62,20 @@ export async function generateMetadata(): Promise<Metadata> {
         default: SITE_NAME,
         template: `%s | ${SITE_NAME}`,
       },
-      description: "记录 AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战经验。",
+      description: "求职中：AI 工具链、Rust、UE5、Flutter 与 SwiftUI 项目实战与技术总结。",
       alternates: { canonical: SITE_URL },
       openGraph: {
         type: "website",
         url: SITE_URL,
         title: SITE_NAME,
-        description: "记录 AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战经验。",
+        description: "求职中：AI 工具链、Rust、UE5、Flutter 与 SwiftUI 项目实战与技术总结。",
         siteName: SITE_NAME,
         images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }],
       },
       twitter: {
         card: "summary_large_image",
         title: SITE_NAME,
-        description: "记录 AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战经验。",
+        description: "求职中：AI 工具链、Rust、UE5、Flutter 与 SwiftUI 项目实战与技术总结。",
         images: [DEFAULT_OG_IMAGE],
       },
       icons: {
@@ -100,13 +103,14 @@ export default function RootLayout({
         "@id": `${SITE_URL}#website`,
         url: SITE_URL,
         name: SITE_NAME,
-        description: "AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战记录。",
+        description: "求职中的开发者：AI 工具链、Rust、UE5、Flutter 与 SwiftUI 的实战记录。",
       },
       {
         "@type": "Person",
         "@id": `${SITE_URL}#person`,
         name: SITE_NAME,
         url: SITE_URL,
+        description: "正在寻找工作机会的开发者",
       },
     ],
   };
