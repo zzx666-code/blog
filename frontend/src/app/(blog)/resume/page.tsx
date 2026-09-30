@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "个人简历 · 求职中",
+  title: "个人简历",
   description: "个人经历、技术方向与项目经验，正在寻找工作机会，欢迎查看与联系。",
   alternates: { canonical: absoluteUrl("/resume") },
 };

@@ -186,7 +186,7 @@ export function PublicHeader() {
           "flex min-h-16 items-center justify-between gap-4 px-4 py-3",
         )}
       >
-        <Link href="/" prefetch={false} className="flex min-w-0 items-center gap-3">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
           {config.owner_avatar ? (
             <Image
               src={config.owner_avatar}
@@ -212,7 +212,6 @@ export function PublicHeader() {
             <Link
               key={item.href}
               href={item.href}
-              prefetch={false}
               className={cn(
                 "inline-flex min-h-10 items-center gap-1.5 rounded-full px-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]",
                 isActive(item.href)
@@ -229,7 +228,6 @@ export function PublicHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/search"
-            prefetch={false}
             className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-[var(--animal-border-color)] px-3 text-sm font-bold text-[var(--animal-text-color)] transition-colors hover:bg-[var(--animal-bg-color-secondary)] focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]"
           >
             <AIIcon name="icon-miles" bounce size={18} />
@@ -246,7 +244,6 @@ export function PublicHeader() {
           <Link
             key={item.href}
             href={item.href}
-            prefetch={false}
             className={cn(
               "inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]",
               isActive(item.href)
@@ -529,7 +526,6 @@ export const PostCard = memo(function PostCard({
           {blog.thumbnail ? (
             <Link
               href={blogHref(blog)}
-              prefetch={false}
               className="relative mb-3 block aspect-[16/9] w-full overflow-hidden rounded-[var(--animal-border-radius-lg)] bg-[var(--animal-bg-color-secondary)]"
               aria-label={blog.title}
             >
@@ -554,7 +550,7 @@ export const PostCard = memo(function PostCard({
           </div>
 
           <h3 className="mb-2 line-clamp-2 text-lg font-extrabold leading-snug tracking-tight text-inherit">
-            <Link href={blogHref(blog)} prefetch={false} className="font-extrabold text-inherit hover:underline">
+            <Link href={blogHref(blog)} className="font-extrabold text-inherit hover:underline">
               {blog.title}
             </Link>
           </h3>
@@ -690,7 +686,6 @@ export function BlogSidebar({
             <Link
               key={category.id}
               href={`/category/${category.id}`}
-              prefetch={false}
               className="block rounded-full px-3 py-2 hover:bg-[var(--animal-bg-color-secondary)]"
             >
               <span className="flex w-full min-w-0 items-center justify-between gap-3 text-left">
@@ -715,7 +710,7 @@ export function BlogSidebar({
         </div>
         <div className="flex flex-wrap gap-1.5">
           {tags.slice(0, 20).map((tag) => (
-            <Link key={tag.id} href={`/tag/${tag.id}`} prefetch={false} className="inline-flex rounded-full">
+            <Link key={tag.id} href={`/tag/${tag.id}`} className="inline-flex rounded-full">
               <AITag color={getCardColor(tag.id)} size="small">
                 #{tag.name}
               </AITag>
