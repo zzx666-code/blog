@@ -30,7 +30,6 @@ import type { Blog, Category, PaginatedResponse, Tag } from "@/types";
 import { Pagination } from "@/components/blog/pagination";
 import {
   Card as AICard,
-  BackTop as AIBackTop,
   Button as AIButton,
   Divider as AIDivider,
   Footer as AIFooter,
@@ -69,7 +68,6 @@ export function getCardColor(seed: number | string): CardColor {
   const index = Math.abs(num) % CARD_COLORS.length;
   return CARD_COLORS[index];
 }
-
 
 export const PUBLIC_CONTAINER = "mx-auto w-[min(1440px,calc(100vw-2rem))]";
 
@@ -263,7 +261,32 @@ export function PublicHeader() {
 }
 
 export function PublicBackTop() {
-  return <AIBackTop visibilityHeight={380} />;
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const updateVisibility = () => setVisible(window.scrollY > 380);
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateVisibility);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <AIButton
+      type="primary"
+      size="large"
+      htmlType="button"
+      icon={<AIIcon name="Rocket" size={24} bounce />}
+      aria-label="返回顶部"
+      title="返回顶部"
+      className="fixed bottom-6 right-6 z-50"
+      onClick={() => {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      }}
+    />
+  );
 }
 
 export function PublicFooter() {
