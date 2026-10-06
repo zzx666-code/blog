@@ -28,7 +28,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
         <EmptyState
           title="暂无项目数据"
           description="添加项目后会在这里展示。"
-          icon={<AIIcon name="icon-shopping" size={32} />}
+          icon={<AIIcon name="ShoppingBag" size={32} />}
         />
       ) : (
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -51,7 +51,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
                   </div>
                 ) : (
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white/40 text-[#725d42]">
-                    <AIIcon name="icon-shopping" size={24} />
+                    <AIIcon name="ShoppingBag" size={24} />
                   </span>
                 )}
                 <h2 className="min-w-0 text-lg font-extrabold leading-tight text-inherit">

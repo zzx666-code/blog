@@ -34,7 +34,7 @@ export function ResumeViewer({ resume }: ResumeViewerProps) {
         <EmptyState
           title="简历暂未发布"
           description="管理员上传简历后，这里会显示最新版本。"
-          icon={<AIIcon name="icon-critterpedia" size={32} />}
+          icon={<AIIcon name="Book" size={32} />}
         />
       </main>
     );

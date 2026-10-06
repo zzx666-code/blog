@@ -142,7 +142,7 @@ function SearchContent() {
               value={input}
               placeholder="输入关键词，例如：Rust、架构、读书笔记..."
               onChange={(event) => setInput(event.target.value)}
-              prefix={<AIIcon name="icon-miles" size={20} bounce />}
+              prefix={<AIIcon name="Search" size={20} bounce />}
               allowClear
               onClear={() => setInput("")}
               className="w-full font-bold"
@@ -205,7 +205,7 @@ function SearchContent() {
                         className="inline-flex min-h-9 items-center rounded-full px-3 py-2 font-bold hover:bg-[var(--animal-bg-color-secondary)] hover:underline"
                       >
                         阅读结果
-                        <AIIcon name="icon-critterpedia" size={14} className="ml-1" />
+                        <AIIcon name="Book" size={14} className="ml-1" />
                       </Link>
                     </div>
                   </PublicCard>
@@ -238,14 +238,14 @@ function SearchContent() {
           <EmptyState
             title="没有找到相关内容"
             description="换个更通用的关键词再试一次。"
-            icon={<AIIcon name="icon-camera" size={32} />}
+            icon={<AIIcon name="Camera" size={32} />}
           />
         )
       ) : (
         <EmptyState
           title="输入关键词后开始搜索"
           description="支持检索标题、摘要和正文片段。"
-          icon={<AIIcon name="icon-miles" size={32} />}
+          icon={<AIIcon name="Search" size={32} />}
         />
       )}
     </main>

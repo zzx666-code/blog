@@ -62,7 +62,7 @@ export function ArticleEndAd({ ad }: { ad: Ad }) {
         <div>
           <Button
             type="primary"
-            icon={<Icon name="icon-shopping" size={16} />}
+            icon={<Icon name="ShoppingBag" size={16} />}
             onClick={openTarget}
           >
             {ad.cta_text || "了解更多"}

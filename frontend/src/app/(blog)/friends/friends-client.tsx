@@ -41,7 +41,7 @@ export function FriendsClient({ links }: { links: FriendLink[] }) {
         <EmptyState
           title="暂无友链"
           description="通过后台添加通过审核的友链后会在这里展示。"
-          icon={<AIIcon name="icon-chat" size={32} />}
+          icon={<AIIcon name="Chat" size={32} />}
         />
       ) : (
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -64,7 +64,7 @@ export function FriendsClient({ links }: { links: FriendLink[] }) {
                   </div>
                 ) : (
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/40 text-[#725d42]">
-                    <AIIcon name="icon-chat" size={24} />
+                    <AIIcon name="Chat" size={24} />
                   </span>
                 )}
                 <div className="min-w-0">
@@ -89,7 +89,7 @@ export function FriendsClient({ links }: { links: FriendLink[] }) {
                   className="inline-flex min-h-10 items-center gap-1 rounded-full bg-[var(--animal-primary-color)] px-4 text-sm font-bold hover:underline"
                 >
                   访问站点
-                  <AIIcon name="icon-miles" size={14} />
+                  <AIIcon name="Search" size={14} />
                 </Link>
               </div>
             </PublicCard>

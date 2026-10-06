@@ -56,7 +56,7 @@ export function CategoriesClient({
             <EmptyState
               title="还没有可展示的分类"
               description="创建分类后会在这里展示。"
-              icon={<AIIcon name="icon-design" size={32} />}
+              icon={<AIIcon name="Paintbrush" size={32} />}
             />
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -79,7 +79,7 @@ export function CategoriesClient({
                       </div>
                     ) : (
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white/40 text-[#725d42]">
-                        <AIIcon name="icon-design" size={20} />
+                        <AIIcon name="Paintbrush" size={20} />
                       </span>
                     )}
                     <div className="min-w-0">

@@ -93,10 +93,10 @@ export default function ImageGenPage() {
 
       <PublicCard color="app-yellow" className="grid gap-3 p-5 sm:p-6">
         <div className="flex items-start gap-3">
-          <AIIcon name="icon-miles" size={28} bounce />
+          <AIIcon name="Search" size={28} bounce />
           <div className="grid gap-2 text-sm font-bold text-[var(--animal-text-color)]">
             <div className="flex items-center gap-2 text-base font-extrabold">
-              <AIIcon name="icon-chat" size={18} />
+              <AIIcon name="Chat" size={18} />
               安全提示
             </div>
             <p>这个页面只提供 YLS 生图服务接入，不会保存你的任何信息。</p>
@@ -171,7 +171,7 @@ export default function ImageGenPage() {
                 size="large"
                 loading={loading}
                 disabled={loading}
-                icon={<AIIcon name="icon-camera" size={18} bounce />}
+                icon={<AIIcon name="Camera" size={18} bounce />}
               >
                 {loading ? "正在生成..." : "开始生图"}
               </AIButton>
@@ -182,7 +182,7 @@ export default function ImageGenPage() {
                 size="large"
                 onClick={handleClearResult}
                 disabled={loading}
-                icon={<AIIcon name="icon-variant" size={18} />}
+                icon={<AIIcon name="Image" size={18} />}
               >
                 清空结果
               </AIButton>
@@ -251,7 +251,7 @@ export default function ImageGenPage() {
                     type="primary"
                     size="large"
                     onClick={handleDownload}
-                    icon={<AIIcon name="icon-camera" size={18} />}
+                    icon={<AIIcon name="Camera" size={18} />}
                   >
                     下载图片
                   </AIButton>
@@ -265,7 +265,7 @@ export default function ImageGenPage() {
               className="grid min-h-112 place-items-center px-6 text-center"
             >
               <div className="grid max-w-sm justify-items-center gap-3 text-center">
-                <AIIcon name="icon-camera" size={48} bounce />
+                <AIIcon name="Camera" size={48} bounce />
                 <div className="text-lg font-extrabold text-[var(--animal-text-color)]">
                   还没有生成图片
                 </div>

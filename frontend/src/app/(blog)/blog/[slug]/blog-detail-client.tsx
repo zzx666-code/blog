@@ -144,7 +144,7 @@ export function BlogDetailClient({
                   <div className="flex flex-wrap items-center gap-2">
                     <AIButton
                       type="default"
-                      icon={<AIIcon name="icon-map" size={18} />}
+                      icon={<AIIcon name="Map" size={18} />}
                       onClick={() => {
                         if (window.history.length > 1) router.back();
                         else router.push("/");
@@ -206,7 +206,7 @@ export function BlogDetailClient({
                     <AIButton
                       type="text"
                       size="small"
-                      icon={<AIIcon name="icon-design" size={16} />}
+                      icon={<AIIcon name="Paintbrush" size={16} />}
                       onClick={() => router.push(`/admin/blogs/${blog.id}`)}
                     >
                       编辑文章
@@ -321,7 +321,7 @@ export function BlogDetailClient({
                 className="inline-flex w-fit items-center rounded-full border border-[var(--animal-border-color)] px-3 py-2 text-sm font-bold hover:bg-[var(--animal-bg-color-secondary)]"
               >
                 继续阅读
-                <AIIcon name="icon-critterpedia" size={14} className="ml-1" />
+                <AIIcon name="Book" size={14} className="ml-1" />
               </Link>
             </PublicCard>
           ) : (
@@ -341,7 +341,7 @@ export function BlogDetailClient({
                 className="inline-flex w-fit items-center rounded-full border border-[var(--animal-border-color)] px-3 py-2 text-sm font-bold hover:bg-[var(--animal-bg-color-secondary)] sm:ml-auto"
               >
                 继续阅读
-                <AIIcon name="icon-critterpedia" size={14} className="ml-1" />
+                <AIIcon name="Book" size={14} className="ml-1" />
               </Link>
             </PublicCard>
           ) : null}

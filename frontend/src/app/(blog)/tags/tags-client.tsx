@@ -72,7 +72,7 @@ export function TagsClient({ tags, categories }: { tags: Tag[]; categories: Cate
             <EmptyState
               title="暂无标签"
               description="添加标签后会在这里按频率展示。"
-              icon={<AIIcon name="icon-diy" size={32} />}
+              icon={<AIIcon name="Tag" size={32} />}
             />
           ) : (
             <>

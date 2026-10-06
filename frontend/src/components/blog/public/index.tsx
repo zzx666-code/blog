@@ -83,6 +83,8 @@ const NAV_LINKS = [
   { href: "/friends", label: "友链", icon: "Chat" as const },
 ];
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const PublicCard = memo(function PublicCard({
   children,
   className,
@@ -230,7 +232,7 @@ export function PublicHeader() {
             href="/search"
             className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-[var(--animal-border-color)] px-3 text-sm font-bold text-[var(--animal-text-color)] transition-colors hover:bg-[var(--animal-bg-color-secondary)] focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]"
           >
-            <AIIcon name="icon-miles" bounce size={18} />
+            <AIIcon name="Search" bounce size={18} />
             搜索
           </Link>
         </div>
@@ -266,7 +268,6 @@ export function PublicBackTop() {
 
 export function PublicFooter() {
   const { config } = useSiteConfig();
-  const currentYear = new Date().getFullYear();
   const socialLinks = [
     {
       href: config.social_github,
@@ -320,7 +321,7 @@ export function PublicFooter() {
       >
         <div className="grid gap-3">
           <div className="flex items-center gap-2 text-base font-extrabold text-[var(--animal-text-color)]">
-            <AIIcon name="icon-miles" size={24} />
+            <AIIcon name="Search" size={24} />
             {config.site_title || "典典博客"}
           </div>
           <div
@@ -335,7 +336,7 @@ export function PublicFooter() {
             }}
           />
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-bold text-[var(--animal-text-color-muted)]">
-            <span>© {currentYear}</span>
+            <span>© {CURRENT_YEAR}</span>
             {config.icp_number ? (
               <a
                 href="https://beian.miit.gov.cn/"
@@ -375,7 +376,7 @@ export function PublicFooter() {
           ))}
         </div>
       </div>
-      <AIFooter type="sea" className="mt-8" />
+      <AIFooter name="Leaf" className="mt-8" />
     </footer>
   );
 }
@@ -406,7 +407,7 @@ export const PageHero = memo(function PageHero({
                   {eyebrow}
                 </AITag>
               ) : null}
-              <AIIcon name="icon-map" size={20} />
+              <AIIcon name="Map" size={20} />
             </div>
             <h1 className="max-w-3xl break-words text-2xl font-black leading-tight tracking-tight text-[var(--animal-text-color)] sm:text-3xl">
               {title}
@@ -471,7 +472,7 @@ export function EmptyState({
       color="default"
       className="grid justify-items-center gap-3 py-12 text-center"
     >
-      <div>{icon || <AIIcon name="icon-critterpedia" size={32} bounce />}</div>
+      <div>{icon || <AIIcon name="Book" size={32} bounce />}</div>
       <div className="text-base font-extrabold text-[var(--animal-text-color)]">{title}</div>
       {description ? (
         <p className="max-w-md text-xs font-bold leading-6 text-[var(--animal-text-color-secondary)]">
@@ -606,7 +607,7 @@ export function FeaturedPost({ blog }: { blog: Blog }) {
         </div>
         <div>
           <Link href={blogHref(blog)}>
-            <AIButton type="primary" icon={<AIIcon name="icon-critterpedia" bounce size={16} />}>
+            <AIButton type="primary" icon={<AIIcon name="Book" bounce size={16} />}>
               开始阅读
             </AIButton>
           </Link>
@@ -630,7 +631,7 @@ export function FeaturedPost({ blog }: { blog: Blog }) {
         </Link>
       ) : (
         <div className="flex min-h-64 items-center justify-center">
-          <AIIcon name="icon-critterpedia" size={64} bounce />
+          <AIIcon name="Book" size={64} bounce />
         </div>
       )}
     </AICard>
@@ -664,7 +665,7 @@ export function BlogSidebar({
               />
             </div>
           ) : (
-            <AIIcon name="icon-miles" size={48} bounce />
+            <AIIcon name="Search" size={48} bounce />
           )}
           <div className="min-w-0">
             <div className="truncate text-base font-extrabold">{config.owner_name || "岛主"}</div>

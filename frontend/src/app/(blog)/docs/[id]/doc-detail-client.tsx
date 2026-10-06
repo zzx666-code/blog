@@ -78,7 +78,7 @@ export function DocDetailClient({
     <PublicCard color="default" className="grid gap-4 p-4 shadow-sm border border-[#725d42]/10">
       <div className="flex items-center justify-between gap-3 border-b border-[#725d42]/10 pb-2 select-none">
         <div className="inline-flex items-center gap-1.5 font-extrabold text-[#725d42] text-sm">
-          <AIIcon name="icon-design" size={16} bounce />
+          <AIIcon name="Paintbrush" size={16} bounce />
           知识目录
         </div>
         <AIButton
@@ -157,7 +157,7 @@ export function DocDetailClient({
               className="sticky top-28 grid gap-3 p-4 shadow-sm border border-[#725d42]/10 select-none"
             >
               <div className="text-sm font-extrabold text-[#725d42] flex items-center gap-1.5 border-b border-[#725d42]/10 pb-2">
-                <AIIcon name="icon-critterpedia" size={16} />
+                <AIIcon name="Book" size={16} />
                 目录导航
               </div>
               <nav className="grid gap-1">

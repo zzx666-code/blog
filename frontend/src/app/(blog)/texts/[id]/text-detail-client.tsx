@@ -56,7 +56,7 @@ export function TextDetailClient({ textKey, initialText }: { textKey: string; in
           <div className="flex flex-wrap items-center gap-2">
             <AIButton
               type="default"
-              icon={<AIIcon name="icon-map" size={18} />}
+              icon={<AIIcon name="Map" size={18} />}
               onClick={() => {
                 if (window.history.length > 1) router.back();
                 else router.push("/");
@@ -118,7 +118,7 @@ export function TextDetailClient({ textKey, initialText }: { textKey: string; in
                 size="large"
                 loading={unlocking}
                 disabled={unlocking}
-                icon={<AIIcon name="icon-critterpedia" size={18} />}
+                icon={<AIIcon name="Book" size={18} />}
               >
                 {unlocking ? "验证中..." : "查看正文"}
               </AIButton>

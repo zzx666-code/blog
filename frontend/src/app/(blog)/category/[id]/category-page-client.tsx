@@ -86,7 +86,7 @@ export function CategoryPageClient({ initialData }: { initialData: CategoryPageI
             href="/categories"
             className="inline-flex min-h-10 items-center gap-1 rounded-full border border-[var(--animal-border-color)] px-4 text-sm font-bold hover:bg-[var(--animal-bg-color-secondary)]"
           >
-            <AIIcon name="icon-critterpedia" size={16} />
+            <AIIcon name="Book" size={16} />
             返回分类索引
           </Link>
         }
@@ -123,7 +123,7 @@ export function CategoryPageClient({ initialData }: { initialData: CategoryPageI
             <EmptyState
               title="这个分类下还没有文章"
               description="换一个分类或返回首页看看最新内容。"
-              icon={<AIIcon name="icon-critterpedia" size={32} />}
+              icon={<AIIcon name="Book" size={32} />}
             />
           ) : (
             <div className="grid gap-4 sm:grid-cols-2">

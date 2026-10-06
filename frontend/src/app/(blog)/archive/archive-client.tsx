@@ -31,7 +31,7 @@ export function ArchiveClient({ data }: { data: ArchiveResponse | null }) {
         <EmptyState
           title="暂无归档内容"
           description="发布文章后会在这里生成时间索引。"
-          icon={<AIIcon name="icon-critterpedia" size={32} />}
+          icon={<AIIcon name="Book" size={32} />}
         />
       ) : (
         <section className="grid min-w-0 gap-4">
@@ -54,7 +54,7 @@ const YearBlock = memo(function YearBlock({
   const header = (
     <div className="flex w-full items-center justify-between gap-4 font-extrabold text-[#725d42]">
       <span className="inline-flex items-center gap-2 text-base">
-        <AIIcon name="icon-critterpedia" size={20} bounce />
+        <AIIcon name="Book" size={20} bounce />
         {yearData.year} 年
       </span>
       <span className="rounded-full bg-[#725d42]/10 px-2.5 py-0.5 text-xs font-bold text-[#725d42]">
@@ -86,7 +86,7 @@ const MonthBlock = memo(function MonthBlock({ monthData }: { monthData: ArchiveM
     <PublicCard color="default" className="grid min-w-0 gap-3 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#725d42]/10 pb-2">
         <div className="flex items-center gap-1.5 text-sm font-extrabold text-[#725d42]">
-          <AIIcon name="icon-design" size={16} />
+          <AIIcon name="Paintbrush" size={16} />
           {monthData.month} 月
         </div>
         <AITag color="default" size="small">
