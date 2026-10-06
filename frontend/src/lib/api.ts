@@ -78,6 +78,7 @@ const API_BASE_URL = isServer ? getServerApiBaseUrl() : getBrowserApiBaseUrl();
 const PUBLIC_FALLBACK_API_URL = normalizeApiBaseUrl(
   process.env.NEXT_PUBLIC_FALLBACK_API_URL || "https://api.itbug.shop/api/v1",
 );
+const INTERNAL_API_TIMEOUT_MS = 2_500;
 
 function shouldUseFallback(baseUrl: string, method: string, hasToken: boolean) {
   if (hasToken || method !== "GET") return false;
@@ -120,17 +121,23 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     (headers as Record<string, string>)["Authorization"] = `Bearer ${token}`;
   }
 
-  const fetchWith = (base: string) =>
+  const fetchWith = (base: string, signal = options.signal) =>
     fetch(`${base}${endpoint}`, {
       ...options,
       headers,
+      signal,
     });
 
   let response: Response;
   try {
-    response = await fetchWith(API_BASE_URL);
+    const timeoutSignal = canFallback ? AbortSignal.timeout(INTERNAL_API_TIMEOUT_MS) : undefined;
+    const signal =
+      options.signal && timeoutSignal
+        ? AbortSignal.any([options.signal, timeoutSignal])
+        : options.signal || timeoutSignal;
+    response = await fetchWith(API_BASE_URL, signal);
   } catch (error) {
-    if (!canFallback) throw error;
+    if (!canFallback || options.signal?.aborted) throw error;
     response = await fetchWith(PUBLIC_FALLBACK_API_URL);
   }
 
@@ -168,11 +175,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     if (isPublicGet && (status === 401 || status === 404)) {
       return undefined as T;
     }
-    throw new ApiError(
-      status,
-      data.message,
-      `${method} ${API_BASE_URL}${endpoint}`,
-    );
+    throw new ApiError(status, data.message, `${method} ${API_BASE_URL}${endpoint}`);
   }
 
   return data.data;
