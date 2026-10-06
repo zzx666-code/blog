@@ -186,7 +186,7 @@ export function PublicHeader() {
           "flex min-h-16 items-center justify-between gap-4 px-4 py-3",
         )}
       >
-        <Link href="/" className="flex min-w-0 items-center gap-3">
+        <Link href="/" prefetch={true} className="flex min-w-0 items-center gap-3">
           {config.owner_avatar ? (
             <Image
               src={config.owner_avatar}
@@ -212,6 +212,7 @@ export function PublicHeader() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={item.href === "/" ? true : null}
               className={cn(
                 "inline-flex min-h-10 items-center gap-1.5 rounded-full px-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]",
                 isActive(item.href)
@@ -244,6 +245,7 @@ export function PublicHeader() {
           <Link
             key={item.href}
             href={item.href}
+            prefetch={item.href === "/" ? true : null}
             className={cn(
               "inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-[var(--animal-focus-yellow)]",
               isActive(item.href)
