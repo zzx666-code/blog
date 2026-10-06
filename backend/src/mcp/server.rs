@@ -508,17 +508,12 @@ impl BlogMcpServer {
     }
 
     async fn get_s3_service(&self) -> Result<S3Service, String> {
-        let db_s3_config = SiteConfigRepo::get_s3_config(&self.state.db)
+        let s3_config = SiteConfigRepo::get_runtime_s3_config(
+            &self.state.db,
+            &self.state.config.s3,
+        )
             .await
             .map_err(Self::api_error_to_string)?;
-        let s3_config = crate::config::S3Config {
-            endpoint: db_s3_config.endpoint,
-            region: db_s3_config.region,
-            bucket: db_s3_config.bucket,
-            access_key: db_s3_config.access_key,
-            secret_key: db_s3_config.secret_key,
-            public_url: db_s3_config.public_url,
-        };
 
         S3Service::new(&s3_config)
             .await

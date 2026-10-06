@@ -122,4 +122,51 @@ impl SiteConfigRepo {
             public_url: map.get("s3_public_url").cloned().unwrap_or_default(),
         })
     }
+
+    /// Load S3 settings saved in the admin panel, falling back to deployment
+    /// environment values for fields that have not been configured yet.
+    pub async fn get_runtime_s3_config(
+        pool: &PgPool,
+        fallback: &crate::config::S3Config,
+    ) -> Result<crate::config::S3Config, ApiError> {
+        let stored = Self::get_s3_config(pool).await?;
+
+        Ok(crate::config::S3Config {
+            endpoint: configured_or(&stored.endpoint, &fallback.endpoint),
+            region: configured_or(&stored.region, &fallback.region),
+            bucket: configured_or(&stored.bucket, &fallback.bucket),
+            access_key: configured_or(&stored.access_key, &fallback.access_key),
+            secret_key: configured_or(&stored.secret_key, &fallback.secret_key),
+            public_url: configured_or(&stored.public_url, &fallback.public_url),
+        })
+    }
+}
+
+fn configured_or(value: &str, fallback: &str) -> String {
+    if value.trim().is_empty() {
+        fallback.to_string()
+    } else {
+        value.trim().to_string()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::configured_or;
+
+    #[test]
+    fn blank_s3_setting_uses_environment_fallback() {
+        assert_eq!(
+            configured_or("  ", "http://rustfs:9000"),
+            "http://rustfs:9000"
+        );
+    }
+
+    #[test]
+    fn stored_s3_setting_takes_precedence() {
+        assert_eq!(
+            configured_or(" https://s3.example.com ", "fallback"),
+            "https://s3.example.com"
+        );
+    }
 }

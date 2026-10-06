@@ -401,11 +401,23 @@ export const documentApi = {
 };
 
 // File API
+function withLocalFileUrl(file: FileInfo): FileInfo {
+  return {
+    ...file,
+    url: `/api/files/${file.id}`,
+    thumbnail_url: file.thumbnail_url ? `/api/files/${file.id}` : file.thumbnail_url,
+  };
+}
+
 export const fileApi = {
-  list: (page = 1, pageSize = 20, fileType?: string) => {
+  list: async (page = 1, pageSize = 20, fileType?: string) => {
     let url = `/admin/files?page=${page}&page_size=${pageSize}`;
     if (fileType) url += `&file_type=${fileType}`;
-    return request<PaginatedResponse<FileInfo>>(url);
+    const response = await request<PaginatedResponse<FileInfo>>(url);
+    return {
+      ...response,
+      items: response.items.map(withLocalFileUrl),
+    };
   },
 
   upload: async (file: File): Promise<FileInfo> => {
@@ -413,17 +425,27 @@ export const fileApi = {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`${API_BASE_URL}/admin/files/upload`, {
+    const response = await fetch("/api/admin/files/upload", {
       method: "POST",
       headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: formData,
     });
 
-    const data: ApiResponse<FileInfo> = await response.json();
+    const responseText = await response.text();
+    let data: ApiResponse<FileInfo>;
+    try {
+      data = JSON.parse(responseText) as ApiResponse<FileInfo>;
+    } catch {
+      throw new ApiError(
+        response.status || -1,
+        "上传服务返回了无法识别的响应",
+        responseText.slice(0, 300),
+      );
+    }
     if (!response.ok || data.code !== 0) {
       throw new ApiError(data.code, data.message);
     }
-    return data.data;
+    return withLocalFileUrl(data.data);
   },
 
   delete: (id: number) => request<void>(`/admin/files/${id}`, { method: "DELETE" }),

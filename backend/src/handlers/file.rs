@@ -3,7 +3,9 @@
 //! Handles file upload, listing, and deletion operations.
 
 use axum::{
+    body::Body,
     extract::{Multipart, Path, Query, State},
+    http::{header, Response},
     Json,
 };
 
@@ -22,15 +24,8 @@ pub async fn upload_file(
     mut multipart: Multipart,
 ) -> Result<Json<ApiResponse<FileResponse>>, ApiError> {
     // Get S3 config from database
-    let db_s3_config = SiteConfigRepo::get_s3_config(&state.db).await?;
-    let s3_config = crate::config::S3Config {
-        endpoint: db_s3_config.endpoint,
-        region: db_s3_config.region,
-        bucket: db_s3_config.bucket,
-        access_key: db_s3_config.access_key,
-        secret_key: db_s3_config.secret_key,
-        public_url: db_s3_config.public_url,
-    };
+    let s3_config =
+        SiteConfigRepo::get_runtime_s3_config(&state.db, &state.config.s3).await?;
 
     // Initialize S3 service
     let s3_service = S3Service::new(&s3_config)
@@ -116,6 +111,32 @@ pub async fn upload_file(
     ))
 }
 
+/// GET /api/v1/files/:id
+///
+/// Stream an uploaded file through the API so article images do not depend on
+/// the storage service being publicly reachable.
+pub async fn get_file_content(
+    State(state): State<AppState>,
+    Path(id): Path<i64>,
+) -> Result<Response<Body>, ApiError> {
+    let file = FileRepository::find_by_id(&state.db, id)
+        .await?
+        .ok_or_else(|| ApiError::NotFound(format!("File with id {} not found", id)))?;
+    let object_key = file
+        .object_key
+        .as_deref()
+        .ok_or_else(|| ApiError::NotFound("File has no storage object".to_string()))?;
+    let s3_config =
+        SiteConfigRepo::get_runtime_s3_config(&state.db, &state.config.s3).await?;
+    let stored = S3Service::new(&s3_config).await?.download_file(object_key).await?;
+
+    Response::builder()
+        .header(header::CONTENT_TYPE, stored.content_type)
+        .header(header::CACHE_CONTROL, "public, max-age=31536000, immutable")
+        .body(Body::from(stored.data))
+        .map_err(|e| ApiError::InternalError(format!("Failed to build file response: {}", e)))
+}
+
 /// GET /api/v1/admin/files
 ///
 /// Get paginated list of files (admin endpoint)
@@ -161,15 +182,8 @@ pub async fn delete_file(
     // Delete from S3 if object key exists
     if let Some(object_key) = &file.object_key {
         // Get S3 config from database
-        let db_s3_config = SiteConfigRepo::get_s3_config(&state.db).await?;
-        let s3_config = crate::config::S3Config {
-            endpoint: db_s3_config.endpoint,
-            region: db_s3_config.region,
-            bucket: db_s3_config.bucket,
-            access_key: db_s3_config.access_key,
-            secret_key: db_s3_config.secret_key,
-            public_url: db_s3_config.public_url,
-        };
+        let s3_config =
+            SiteConfigRepo::get_runtime_s3_config(&state.db, &state.config.s3).await?;
 
         let s3_service = S3Service::new(&s3_config)
             .await

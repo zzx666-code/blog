@@ -5,8 +5,13 @@ use axum::{
     Router,
 };
 
-use crate::handlers::file::{delete_file, list_files, upload_file};
+use crate::handlers::file::{delete_file, get_file_content, list_files, upload_file};
 use crate::AppState;
+
+/// Public file delivery routes.
+pub fn routes() -> Router<AppState> {
+    Router::new().route("/files/{id}", get(get_file_content))
+}
 
 /// Admin routes for file management (requires authentication)
 pub fn admin_routes() -> Router<AppState> {

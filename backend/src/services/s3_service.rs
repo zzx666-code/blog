@@ -28,9 +28,27 @@ pub struct UploadResult {
     pub bucket: String,
 }
 
+pub struct DownloadResult {
+    pub data: Vec<u8>,
+    pub content_type: String,
+}
+
 impl S3Service {
     /// Create a new S3 service instance
     pub async fn new(config: &S3Config) -> Result<Self, ApiError> {
+        for (name, value) in [
+            ("endpoint", config.endpoint.as_str()),
+            ("bucket", config.bucket.as_str()),
+            ("access_key", config.access_key.as_str()),
+            ("secret_key", config.secret_key.as_str()),
+        ] {
+            if value.trim().is_empty() {
+                return Err(ApiError::FileUploadError(format!(
+                    "S3 configuration is missing {name}"
+                )));
+            }
+        }
+
         let credentials = Credentials::new(
             &config.access_key,
             &config.secret_key,
@@ -84,6 +102,8 @@ impl S3Service {
             format!("uploads/{}.{}", Uuid::new_v4(), extension)
         };
 
+        self.ensure_bucket().await?;
+
         // Upload to S3
         let body = ByteStream::from(data);
 
@@ -119,6 +139,78 @@ impl S3Service {
             url,
             bucket: self.bucket.clone(),
         })
+    }
+
+    /// Download an object for public delivery through the application API.
+    pub async fn download_file(&self, object_key: &str) -> Result<DownloadResult, ApiError> {
+        let output = self
+            .client
+            .get_object()
+            .bucket(&self.bucket)
+            .key(object_key)
+            .send()
+            .await
+            .map_err(|e| {
+                tracing::error!("S3 download error: {:?}", e);
+                ApiError::NotFound("File content is unavailable".to_string())
+            })?;
+
+        let content_type = output
+            .content_type()
+            .unwrap_or("application/octet-stream")
+            .to_string();
+        let data = output.body.collect().await.map_err(|e| {
+            tracing::error!("S3 response body error: {:?}", e);
+            ApiError::FileUploadError("Failed to read stored file".to_string())
+        })?;
+
+        Ok(DownloadResult {
+            data: data.into_bytes().to_vec(),
+            content_type,
+        })
+    }
+
+    async fn ensure_bucket(&self) -> Result<(), ApiError> {
+        if self
+            .client
+            .head_bucket()
+            .bucket(&self.bucket)
+            .send()
+            .await
+            .is_ok()
+        {
+            return Ok(());
+        }
+
+        if let Err(create_error) = self
+            .client
+            .create_bucket()
+            .bucket(&self.bucket)
+            .send()
+            .await
+        {
+            // Another request may have created the bucket between the first
+            // HEAD request and CREATE. Treat that race as success.
+            if self
+                .client
+                .head_bucket()
+                .bucket(&self.bucket)
+                .send()
+                .await
+                .is_ok()
+            {
+                return Ok(());
+            }
+
+            tracing::error!("S3 bucket initialization error: {:?}", create_error);
+            return Err(ApiError::FileUploadError(format!(
+                "Failed to initialize storage bucket '{}': {}",
+                self.bucket, create_error
+            )));
+        }
+
+        tracing::info!("S3 bucket initialized: {}", self.bucket);
+        Ok(())
     }
 
     /// Delete a file from S3

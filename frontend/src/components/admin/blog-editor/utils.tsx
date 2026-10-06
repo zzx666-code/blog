@@ -62,9 +62,10 @@ export async function uploadImageToServer(file: File): Promise<string> {
     });
     return `![${file.name}](${result.url})`;
   } catch (error) {
-    toast.error(`上传失败: ${file.name}`, {
+    const message = error instanceof Error ? error.message : "未知错误";
+    toast.error(`上传失败: ${file.name}（${message}）`, {
       id: toastId,
-      duration: 3000,
+      duration: 5000,
     });
     throw error;
   }

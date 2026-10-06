@@ -45,6 +45,8 @@ pub fn create_routes() -> Router<AppState> {
         .merge(directory::routes())
         // Document routes (public)
         .merge(document::routes())
+        // Uploaded file delivery routes (public)
+        .merge(file::routes())
         // Friend link routes (public)
         .merge(friend_link::routes())
         // Ad routes (public)
